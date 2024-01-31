@@ -103,6 +103,8 @@ require('lazy').setup({
     end,
   },
 
+  { 'rose-pine/neovim', name = 'rose-pine' },
+
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -116,14 +118,10 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+      main = "ibl",
+      opts = {}
   },
 
   -- "gc" to comment visual regions/lines
@@ -174,16 +172,17 @@ vim.o.termguicolors = true
 
 -- Better editing experience
 vim.o.expandtab = true
-vim.o.smarttab = true
 vim.o.cindent = true
 vim.o.autoindent = true
 vim.o.wrap = true
 vim.o.textwidth = 300
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
-vim.o.softtabstop = -1 -- If negative, shiftwidth value is used
+vim.o.smartindent = true
+vim.o.softtabstop = 4
 vim.o.list = true
-
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
@@ -216,6 +215,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.cmd.colorscheme = 'rose-pine'
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -223,7 +224,7 @@ vim.o.termguicolors = true
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- better escape
-vim.keymap.set('i', '<C-l>', '<ESC>')
+vim.keymap.set('i', 'jj', '<ESC>')
 
 -- enter in normal mode
 vim.keymap.set('n', '<Enter>', 'i<Enter><ESC>')
@@ -339,11 +340,11 @@ require('nvim-treesitter.configs').setup {
     },
     swap = {
       enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
       swap_previous = {
         ['<leader>A'] = '@parameter.inner',
+      },
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
       },
     },
   },
@@ -418,6 +419,14 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      format = { 
+        enable = true,
+        -- Put format options here
+        -- NOTE: the value should be String!
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "4",
+      }}
     },
   },
 }
