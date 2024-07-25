@@ -1,10 +1,17 @@
 return {
     {
         "folke/which-key.nvim",
-        dependencies = { "echasnovski/mini.icons", "nvim-tree/nvim-web-devicons" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         event = "VeryLazy",
         opts = {
-            plugins = { spelling = true },
+            icons = {
+                mappings = false,
+                keys = {
+                    Esc = "<esc>",
+                    BS = "<bs>",
+                    Space = "␣",
+                },
+            },
         },
         config = function(_, opts)
             local wk = require("which-key")
