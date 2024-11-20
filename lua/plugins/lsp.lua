@@ -28,7 +28,6 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
-                "tsserver",
                 "clangd",
                 "htmx",
                 "gopls",
@@ -62,6 +61,14 @@ return {
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
+        local toggle_doc = function()
+            if cmp.visible_docs() then
+              cmp.close_docs()
+            else
+              cmp.open_docs()
+            end
+        end
+
         cmp.setup({
             snippet = {
                 expand = function(args)
@@ -72,7 +79,8 @@ return {
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-g>'] = toggle_doc(),
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
