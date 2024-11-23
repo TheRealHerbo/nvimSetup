@@ -1,6 +1,8 @@
 require("config")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+-- download lazy.nvim if not exists
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -11,8 +13,11 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
+-- add lazy.nvim to runtimepath
 vim.opt.rtp:prepend(lazypath)
 
+-- setup lazy and load plugins from lua/plugins/
 require("lazy").setup({
 	spec = "plugins",
     change_detection = { notify = false },

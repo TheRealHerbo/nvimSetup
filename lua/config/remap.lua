@@ -1,25 +1,37 @@
+local keymap = vim.keymap
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- better escape
-vim.keymap.set('i', 'jj', '<ESC>')
+keymap.set('i', 'jj', '<ESC>')
 
 -- enter in normal mode
-vim.keymap.set('n', '<Enter>', 'i<Enter><ESC>')
+keymap.set('n', '<Enter>', 'i<Enter><ESC>')
 
 -- easy tab in normal/visual mode
-vim.keymap.set('n', '<Tab>', '>>')
-vim.keymap.set('n', '<S-Tab>', '<<')
-vim.keymap.set('v', '<Tab>', '>>')
-vim.keymap.set('v', '<S-Tab>', '<<')
+keymap.set({ 'n', 'v' }, '<Tab>', '>><Esc>')
+keymap.set({ 'n', 'v' }, '<S-Tab>', '<<<Esc>')
 
 -- paste in insert mode
-vim.keymap.set('i', '<C-v>', '<C-r>+')
+keymap.set('i', '<C-v>', '<C-r>+')
 
--- easy open netrw
-vim.keymap.set('n', '<leader>e', ':Explore<Enter>')
+-- window navigation
+keymap.set('n', '<leader>w', '<C-w>')
+keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'vertical' })
+keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'horizontal' })
+keymap.set('n', '<leader>ww', '<C-w>w', { desc = 'next' })
+keymap.set('n', '<leader>wq', '<C-w>q', { desc = 'close' })
+keymap.set('n', '<leader>wh', '<C-w>h', { desc = 'left' })
+keymap.set('n', '<leader>wj', '<C-w>j', { desc = 'down' })
+keymap.set('n', '<leader>wk', '<C-w>k', { desc = 'up' })
+keymap.set('n', '<leader>wl', '<C-w>l', { desc = 'right' })
+keymap.set('n', '<M-h>', '<C-w>5<', { desc = 'size left' })
+keymap.set('n', '<M-j>', '<C-w>5+', { desc = 'size add' })
+keymap.set('n', '<M-k>', '<C-w>5-', { desc = 'size sub' })
+keymap.set('n', '<M-l>', '<C-w>5>', { desc = 'size right' })
 
 -- LSP
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -31,30 +43,42 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wl', function()
+        keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, opts)
+        keymap.set('n', '<space>la', vim.lsp.buf.add_workspace_folder, opts)
+        keymap.set('n', '<space>lr', vim.lsp.buf.remove_workspace_folder, opts)
+        keymap.set('n', '<space>ll', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<space>f', function()
+        keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+        keymap.set('n', '<space>f', function()
             vim.lsp.buf.format { async = true }
         end, opts)
     end,
 })
 
+-- diagnostics
+keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'prev diagnostic' })
+keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic' })
+keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'open error message' })
+keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'open quickfix list' })
+
+-- quickfix
+keymap.set('n', '<C-j>', ':cnext<CR>', { desc = 'next quickfix' })
+keymap.set('n', '<C-k>', ':cprev<CR>', { desc = 'prev quickfix' })
+
 -- copilot
-vim.keymap.set('i', '<C-f>', 'copilot#Accept("\\<CR>")', {
+keymap.set('i', '<C-f>', 'copilot#Accept("\\<CR>")', {
     expr = true,
     replace_keycodes = false
 })
-vim.keymap.set('i', '<C-Tab>', '<Plug>(copilot-accept-word)')
+keymap.set('i', '<C-Tab>', '<Plug>(copilot-accept-word)')
 vim.g.copilot_no_tab_map = true
+
+-- context of class or function
+keymap.set('n', '<leader>cc', ':TSContextToggle<CR>')
