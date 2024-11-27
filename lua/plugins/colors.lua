@@ -19,6 +19,8 @@ return {
                     floats = "dark",   -- style for floating windows
                 },
             })
+
+            vim.cmd("colorscheme tokyonight")
         end
     },
     {
@@ -29,7 +31,7 @@ return {
                 disable_background = true,
             })
 
-            vim.cmd("colorscheme rose-pine")
+            -- vim.cmd("colorscheme rose-pine")
         end
     }
 }
