@@ -7,7 +7,9 @@ return {
     config = function()
         local telescope = require('telescope')
 
-        telescope.setup()
+        telescope.setup({
+            file_ignore_patterns = { "node%_modules/.*", "%.git/.*" },
+        })
         telescope.load_extension('harpoon')
         telescope.load_extension('projects')
 
