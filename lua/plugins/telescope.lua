@@ -8,7 +8,7 @@ return {
         local telescope = require('telescope')
 
         telescope.setup({
-            file_ignore_patterns = { "node%_modules/.*", "%.git/.*", "%tmp/.*" },
+            file_ignore_patterns = { "^node_modules/", "^.git/", "^tmp/*" },
         })
         telescope.load_extension('harpoon')
         telescope.load_extension('projects')
@@ -24,6 +24,9 @@ return {
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
         end)
+        vim.keymap.set('n', '<leader>pg', function()
+            builtin.live_grep()
+        end, {})
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
         vim.keymap.set('n', 'gr', builtin.lsp_references, {})
     end

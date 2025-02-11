@@ -2,7 +2,6 @@ return {
     {
         "folke/tokyonight.nvim",
         name = "tokyonight",
-        event = "VeryLazy",
         config = function()
             require("tokyonight").setup({
                 -- your configuration comes here
@@ -27,7 +26,6 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
-        event = "VeryLazy",
         config = function()
             require('rose-pine').setup({
                 disable_background = true,
