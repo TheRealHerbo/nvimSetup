@@ -82,3 +82,7 @@ vim.g.copilot_no_tab_map = true
 
 -- context of class or function
 keymap.set('n', '<leader>cc', ':TSContextToggle<CR>')
+
+-- dadbod
+keymap.set('n', '<leader>dt', ':DBUIToggle<CR>')
+keymap.set('n', '<leader>dc', ':DBUIAddConnection<CR>')
