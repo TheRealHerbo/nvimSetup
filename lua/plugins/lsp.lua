@@ -11,6 +11,7 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
+        "garyhurtz/cmp_bulma.nvim",
     },
 
     config = function()
@@ -37,7 +38,6 @@ return {
             },
             handlers = {
                 function(server_name) -- default handler (optional)
-
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
@@ -58,6 +58,7 @@ return {
                 end,
             }
         })
+        require('cmp_bulma').setup()
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
@@ -78,6 +79,7 @@ return {
                 { name = 'luasnip' }, -- For luasnip users.
                 { name = 'buffer' },
                 { name = 'path' },
+                { name = 'bulma' },
             })
         })
 
