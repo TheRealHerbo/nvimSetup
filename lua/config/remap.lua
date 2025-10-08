@@ -86,3 +86,19 @@ keymap.set('n', '<leader>cc', ':TSContextToggle<CR>')
 -- dadbod
 keymap.set('n', '<leader>dt', ':DBUIToggle<CR>')
 keymap.set('n', '<leader>dc', ':DBUIAddConnection<CR>')
+
+-- colorscheme
+local themeChanged = false
+local function toggle_color()
+    if themeChanged then
+        vim.cmd[[colorscheme tokyonight-storm]]
+        themeChanged = false
+        print('changed to tokyo')
+    else
+        vim.cmd[[colorscheme catppuccin-latte]]
+        themeChanged = true
+        print(themeChanged)
+    end
+end
+
+keymap.set('n', '<leader>vc', toggle_color, { desc = 'toggle theme' })

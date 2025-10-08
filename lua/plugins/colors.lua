@@ -33,5 +33,17 @@ return {
 
             -- vim.cmd("colorscheme rose-pine")
         end
+    },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+        config = function()
+            require("catppuccin").setup({
+                background = {
+                    light = "latte"
+                }
+            })
+        end
     }
 }
